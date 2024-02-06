@@ -1,22 +1,50 @@
 CC = gcc
-CFLAGS = -Iinclude
+CFLAGS = -Wall -g
+INCLUDES = -Iinclude
 
 INCLUDE_DIR = include
 SRC_DIR = src
 BUILD_DIR = build
 BIN_DIR = bin
 
-TARGET = $(BIN_DIR)/todo
+# source files
+INCLUDE_FILES = $(wildcard $(INCLUDE_DIR)/*.h)
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
-SRCS = $(wildcard $(SRC_DIR)/*.c)
-OBJS = $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
+EXECUTABLE = $(BIN_DIR)/todo
 
-$(TARGET): $(OBJS) | $(BIN_DIR)
-    @$(CC) $(CFLAGS) -o $@ $(OBJS)
+.PHONY: all clean format
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJ_FILES) | $(BIN_DIR)
+	@$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) $(LIBS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
-    @$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
-.PHONY: clean
+$(BUILD_DIR):
+	@mkdir -p $(BUILD_DIR)
+
+$(BIN_DIR):
+	@mkdir -p $(BIN_DIR)
+
+# INSTALL_DIR = ~/.todo
+# install:
+# 	@mkdir -p $(INSTALL_DIR)
+
+# 	@# copy the executable to install dir
+# 	@cp $(EXECUTABLE) $(INSTALL_DIR)/todo
+
+# 	@echo "alias todo='$(INSTALL_DIR)/todo'" >> ~/.bashrc
+
+# 	@echo "\ntodo installed successfully"
+# 	@echo "Restart terminal session"
+# 	@echo "Run 'todo help' to get started"
+
+format:
+	@clang-format -i $(INCLUDE_FILES) $(SRC_FILES)
+
 clean:
-    rm -f $(BUILD_DIR)/*.o $(BIN_DIR)/todo
+	@rm -rf $(EXECUTABLE) $(BUILD_DIR) $(BIN_DIR)
