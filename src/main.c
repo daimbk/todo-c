@@ -25,10 +25,17 @@ int main(int argc, char *argv[])
 		printf("Added: %s\n", task);
 		add(task);
 		free(task);
+
+		exit(0);
+	}
+
+	if (strcmp(argv[1], "delete") == 0) {
+		delete (atoi(argv[2]));
 	}
 
 	if (strcmp(argv[1], "list") == 0) {
 		list();
+		exit(0);
 	}
 
 	return 0;
