@@ -14,8 +14,7 @@ int main(int argc, char *argv[])
 
 	if (strcmp(argv[1], "add") == 0) {
 		if (argc < 3) {
-			printf("Not enough arguments!");
-			printf("Usage: todo add <task>");
+			printf("Not enough arguments!\nUsage : todo add <task>");
 			exit(1);
 		}
 
@@ -37,8 +36,7 @@ int main(int argc, char *argv[])
 
 	if (strcmp(argv[1], "delete") == 0) {
 		if (argc < 3 && argc != 3) {
-			printf("Not enough arguments!");
-			printf("Usage: todo delete <task number>");
+			printf("Not enough arguments!\nUsage: todo delete <task number>");
 			exit(1);
 		}
 
@@ -48,8 +46,7 @@ int main(int argc, char *argv[])
 
 	if (strcmp(argv[1], "list") == 0) {
 		if (argc != 2) {
-			printf("Incorrect arguments!");
-			printf("Usage: todo list");
+			printf("Incorrect arguments!\nUsage: todo list");
 			exit(1);
 		}
 
