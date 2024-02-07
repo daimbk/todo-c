@@ -4,5 +4,6 @@
 void add(char *task);
 void delete(int taskNum);
 void list();
+void help();
 
 #endif

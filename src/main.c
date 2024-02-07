@@ -12,6 +12,16 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
+	if (strcmp(argv[1], "help") == 0) {
+		if (argc != 2) {
+			printf("Incorrect arguments!\nUsage: todo help");
+			exit(1);
+		}
+
+		help();
+		exit(0);
+	}
+
 	if (strcmp(argv[1], "add") == 0) {
 		if (argc < 3) {
 			printf("Not enough arguments!\nUsage : todo add <task>");

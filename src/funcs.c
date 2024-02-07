@@ -64,3 +64,12 @@ void list()
 
 	fclose(file);
 }
+
+void help()
+{
+	printf("Commands:\n");
+	printf("Adding a task: todo add <task>\n");
+	printf("Deleting a task: todo delete <task number>\n");
+	printf("Displaying tasks: todo list\n");
+	printf("View commands: todo help\n");
+}
