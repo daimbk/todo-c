@@ -71,9 +71,9 @@ void delete(int taskNum)
 		exit(1);
 	}
 
-	char buffer[100];
+	char buffer[256];
 	int lineNum = 1;
-	while (fgets(buffer, 100, file) != NULL) {
+	while (fgets(buffer, sizeof(buffer), file) != NULL) {
 		if (lineNum != taskNum) {
 			fputs(buffer, tempFile);
 		}
@@ -97,8 +97,8 @@ void list()
 
 	printf("Tasks:\n");
 	int index = 1;
-	char buffer[100];
-	while (fgets(buffer, 100, file) != NULL) {
+	char buffer[256];
+	while (fgets(buffer, sizeof(buffer), file) != NULL) {
 		printf("%d. %s", index, buffer);
 		index++;
 	}
