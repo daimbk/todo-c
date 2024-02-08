@@ -44,6 +44,16 @@ int main(int argc, char *argv[])
 		exit(0);
 	}
 
+	if (strcmp(argv[1], "done") == 0) {
+		if (argc < 3 && argc != 3) {
+			printf("Not enough arguments!\nUsage: todo done <task number>");
+			exit(1);
+		}
+
+		done(atoi(argv[2]));
+		exit(0);
+	}
+
 	if (strcmp(argv[1], "delete") == 0) {
 		if (argc < 3 && argc != 3) {
 			printf("Not enough arguments!\nUsage: todo delete <task number>");

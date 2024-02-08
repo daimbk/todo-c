@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 void add(char *task)
@@ -14,6 +15,46 @@ void add(char *task)
 
 	fprintf(file, "%s\n", task);
 	fclose(file);
+}
+
+void done(int taskNum)
+{
+	char strike_open[] = "\e[9m";
+	char strike_close[] = "\e[m";
+
+	FILE *file = fopen("tasks.txt", "r");
+	if (file == NULL) {
+		printf("Error opening file!");
+		exit(1);
+	}
+
+	FILE *tempFile = fopen("temp.txt", "w");
+	if (tempFile == NULL) {
+		printf("Error opening temporary file!");
+		exit(1);
+	}
+
+	char buffer[256];
+	int lineNum = 1;
+	while (fgets(buffer, sizeof(buffer), file) != NULL) {
+		// trim newline
+		buffer[strlen(buffer) - 1] = '\0';
+
+		if (lineNum == taskNum) {
+			fprintf(tempFile, "%s%s%s\n", strike_open, buffer, strike_close);
+			printf("Task %d marked as done!\n", taskNum);
+		} else {
+			fprintf(tempFile, "%s\n", buffer);
+		}
+
+		lineNum++;
+	}
+
+	fclose(file);
+	fclose(tempFile);
+
+	remove("tasks.txt");
+	rename("temp.txt", "tasks.txt");
 }
 
 void delete(int taskNum)
